@@ -1,0 +1,41 @@
+#include <stdio.h>
+#define SIZE 10
+
+int hashTable[SIZE] = {0};  // Initialize hash table with 0s
+
+void insert(int key) {
+    for (int i = 0; i < SIZE; i++) {
+        int index = (key + i) % SIZE;
+        if (hashTable[index] == 0) {
+            hashTable[index] = key;
+            break;
+        }
+    }
+}
+
+int search(int key) {
+    for (int i = 0; i < SIZE; i++) {
+        int index = (key + i) % SIZE;
+        if (hashTable[index] == key)
+            return index;
+        if (hashTable[index] == 0)
+            return -1;  // Stop searching if empty slot found
+    }
+    return -1;
+}
+
+int main() {
+    insert(23);
+    insert(43);
+    insert(13);
+    insert(27);
+    insert(53);
+
+    int result = search(43);
+    if (result != -1)
+        printf("Key found at index %d\n", result);
+    else
+        printf("Key not found\n");
+
+    return 0;
+}

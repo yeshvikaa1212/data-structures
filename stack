@@ -1,0 +1,90 @@
+#include <stdio.h>
+
+#define CAPACITY 5 
+int arr[CAPACITY];
+int top = -1;
+
+int isfull() {
+    return top == CAPACITY - 1;
+}
+
+void push(int data) {
+    if (isfull()) {
+        printf("Overflow error\n");
+    } else {
+        top++;
+        arr[top] = data;
+    }
+}
+
+int isempty() {
+    return top == -1;
+}
+
+int pop() {
+    if (isempty()) {
+        printf("Underflow error\n");
+        return -1;
+    } else {
+        int value = arr[top];
+        top--;
+        return value;
+    }
+}
+
+int peek() {
+    if (isempty()) {
+        printf("Stack is empty\n");
+        return -1;
+    } else {
+        return arr[top];
+    }
+}
+
+void printstack() {
+    if (isempty()) {
+        printf("Stack is empty\n");
+    } else {
+        for (int i = 0; i <= top; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, data;
+    do {
+        printf("Stack operations:\n 1) Push\n 2) Pop\n 3) Peek\n 4) Display Stack\n 5) Exit\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter element to be pushed: ");
+                scanf("%d", &data);
+                push(data);
+                break;
+            case 2: {
+                int poppedElement = pop();
+                if (poppedElement != -1) {
+                    printf("Element popped: %d\n", poppedElement);
+                }
+                break;
+            }
+            case 3:
+                printf("Element at top: %d\n", peek());
+                break;
+            case 4:
+                printstack();
+                break;
+            case 5:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+                break;
+        }
+    } while (choice != 5);
+
+    return 0;
+}

@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+void printList(Node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    Node head;
+    head.data = 1;
+
+    Node node2;
+    head.next = &node2;
+    node2.data = 2;
+
+    Node node3;
+    node2.next = &node3;
+    node3.data = 3;
+    node3.next = NULL;
+
+    printf("Linked list: ");
+    printList(&head);
+    return 0;
+}

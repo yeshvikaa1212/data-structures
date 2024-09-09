@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+#define V 4
+
+int find(int parent[], int i) {
+    if (parent[i] == i) return i;
+    return find(parent, parent[i]);
+}
+
+void unionSet(int parent[], int x, int y) {
+    parent[x] = y;
+}
+
+void kruskal(int graph[V][V]) {
+    int i, j, k, u, v, min, sum = 0;
+    int parent[V];
+    int edge_count = 0;
+
+    for (i = 0; i < V; i++)
+        parent[i] = i;
+
+    while (edge_count < V - 1) {
+        min = 999;
+        for (i = 0; i < V; i++) {
+            for (j = 0; j < V; j++) {
+                if (graph[i][j] < min) {
+                    min = graph[i][j];
+                    u = i;
+                    v = j;
+                }
+            }
+        }
+
+        u = find(parent, u);
+        v = find(parent, v);
+
+        if (u != v) {
+            printf("%d - %d : %d\n", u, v, min);
+            unionSet(parent, u, v);
+            sum += min;
+            edge_count++;
+        }
+
+        graph[u][v] = graph[v][u] = 999;
+    }
+
+    printf("Minimum Spanning Tree: %d\n", sum);
+}
+
+int main() {
+    int graph[V][V] = {
+        {0, 5, 10, 15},
+        {5, 0, 3, 5},
+        {10, 3, 0, 2},
+        {15, 5, 2, 0}
+    };
+
+    kruskal(graph);
+
+    return 0;
+}

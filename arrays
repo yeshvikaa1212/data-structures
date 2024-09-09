@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int arr[5] = {0};
+int size = 0;
+
+int main() {
+    int choice, element;
+
+    while (1) {
+        printf("1. Insert\n2. Display\n3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            if (size < 5) {
+                printf("Enter element to insert: ");
+                scanf("%d", &element);
+                arr[size] = element;
+                size++;
+            } else {
+                printf("Array is full.\n");
+            }
+        } else if (choice == 2) {
+            for (int i = 0; i < size; i++) {
+                printf("%d ", arr[i]);
+            }
+            printf("\n");
+        } else if (choice == 3) {
+            return 0;
+        }
+    }
+}

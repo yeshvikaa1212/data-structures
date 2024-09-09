@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX_NODES 5
+
+void primMST(int graph[][MAX_NODES], int n) {
+    int key[n], parent[n], mstSet[n];
+    for (int i = 0; i < n; i++) key[i] = INT_MAX, mstSet[i] = 0;
+    key[0] = 0;
+
+    for (int cout = 0; cout < n - 1; cout++) {
+        int u = 0;
+        for (int v = 0; v < n; v++)
+            if (mstSet[v] == 0 && key[v] < key[u]) u = v;
+        mstSet[u] = 1;
+
+        for (int v = 0; v < n; v++)
+            if (graph[u][v] && mstSet[v] == 0 && graph[u][v] < key[v])
+                parent[v] = u, key[v] = graph[u][v];
+    }
+
+    printf("Edge \tWeight\n");
+    for (int i = 1; i < n; i++)
+        printf("%d - %d \t%d \n", parent[i], i, graph[i][parent[i]]);
+}
+
+int main() {
+    int graph[][5] = {
+        {0, 4, 1, 0, 0},
+        {4, 0, 2, 1, 0},
+        {1, 2, 0, 5, 0},
+        {0, 1, 5, 0, 3},
+        {0, 0, 0, 3, 0}
+    };
+
+    primMST(graph, 5);
+    return 0;
+}

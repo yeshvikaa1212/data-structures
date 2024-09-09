@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX_NODES 5
+
+void dijkstra(int graph[MAX_NODES][MAX_NODES], int n, int start) {
+    int dist[n];
+    for (int i = 0; i < n; i++)
+        dist[i] = INT_MAX;
+    dist[start] = 0;
+
+    for (int count = 0; count < n - 1; count++) {
+        int u = -1, min = INT_MAX;
+        for (int v = 0; v < n; v++)
+            if (dist[v] < min)
+                min = dist[v], u = v;
+
+        for (int v = 0; v < n; v++)
+            if (graph[u][v] && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
+
+    printf("Shortest distances from node %d:\n", start);
+    for (int i = 0; i < n; i++)
+        printf("Node %d: %d\n", i, dist[i]);
+}
+
+int main() {
+    int graph[5][5] = {
+        {0, 4, 1, 0, 0},
+        {0, 0, 2, 1, 0},
+        {0, 0, 0, 5, 0},
+        {0, 0, 0, 0, 3},
+        {0, 0, 0, 0, 0}
+    };
+    dijkstra(graph, 5, 0);
+    return 0;
+}
